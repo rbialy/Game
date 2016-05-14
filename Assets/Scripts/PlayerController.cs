@@ -185,7 +185,7 @@ public class PlayerController : MonoBehaviour {
 	
 	Vector3 SetVelocity(float mh, float mv){
 		float xVelocity = (mv * speed * vForward.x * offset * forward) + (mv * speed * vBack.x * offset * back) + (mh * speed  * vLeft.x * left) + (mh * speed * vRight.x * right);
-		float yVelocity = (mv * speed * offset * vForward.z * forward) + (mv * speed * offset * vBack.z * back) + (mh * speed * vLeft.z * left) + (mh * speed * vRight.z * right);
+		float zVelocity = (mv * speed * offset * vForward.z * forward) + (mv * speed * offset * vBack.z * back) + (mh * speed * vLeft.z * left) + (mh * speed * vRight.z * right);
 		return new Vector3 (xVelocity, rb.velocity.y, zVelocity);
 	}
 	
