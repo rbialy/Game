@@ -5,14 +5,17 @@ public class CameraController : MonoBehaviour {
 	
 	public Transform player;
 	public float turnspeed;
-
+	public float cameraYDistance = 10;
+	public float cameraZDistance = 10;
+	
+	// How far the camera is from the player
 	private Vector3 offset;
 
 	// Use this for initialization
-	void Start () 
-	{
-		offset = new Vector3 (player.position.x, player.position.y + 10.0f, player.position.z - 10.0f);
+	void Start() {
+		offset = new Vector3 (player.position.x, player.position.y + cameraYDistance, player.position.z - cameraZDistance);
 	}
+	
 	void LateUpdate () {
 		offset = Quaternion.AngleAxis (Input.GetAxis ("Mouse X") * turnspeed, Vector3.up) * offset;
 		transform.position = player.position + offset;
