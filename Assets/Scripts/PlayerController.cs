@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour {
 	private bool isMoving;
 	private bool isRolling;
 	private bool isDashing;
+	private bool isGrounded;
 	private float dashTime;
 	private float gDistance;
 
@@ -34,17 +35,21 @@ public class PlayerController : MonoBehaviour {
 	void Start(){
 		rb = GetComponent<Rigidbody> ();
 		Sparks.SetActive (false);
+		SetCountText ();
+		winText.text = "";
+
 		count = 0;
 		isMoving = false;
 		isRolling = false;
 		isDashing = false;
+		isGrounded = true;
 		gDistance = GetComponent<Collider> ().bounds.extents.y;
-		SetCountText ();
-		winText.text = "";
+
 		forward = 0;
 		back = 0;
 		left = 0;
 		right = 0;
+
 		vForward = MainCamera.transform.TransformDirection (Vector3.forward);
 		vBack = MainCamera.transform.TransformDirection (Vector3.back);
 		vLeft = MainCamera.transform.TransformDirection (Vector3.left);
@@ -56,55 +61,53 @@ public class PlayerController : MonoBehaviour {
 	}
 	
 	void FixedUpdate(){
-		if (isDashing) {
-			Dash ();
-		}
-		
-		//Movement Code In relation to Camera Orientation
-		float moveHorizontal = Input.GetAxis ("Horizontal");
-		float moveVertical = Input.GetAxis("Vertical");
-		
-		if (moveHorizontal < 0) {
-			left = -1;
-			right = 0;
-		}
-		if (moveHorizontal > 0) {
-			right = 1;
-			left = 0;
-		}
-		if (moveVertical < 0) {
-			back = -1;
-			forward = 0;
-		}
-		if (moveVertical > 0) {
-			forward = 1;
-			back = 0;
-		}
-		if (moveHorizontal == 0) {
-			left = 0;
-			right = 0;
-		}
-		if (moveVertical == 0) {
-			forward = 0;
-			back = 0;
-		}
+		Dash ();
+
+		left = 0;
+		right = 0;
+		forward = 0;
+		back = 0;
 
 		vForward = MainCamera.transform.TransformDirection (Vector3.forward);
 		vBack = MainCamera.transform.TransformDirection (Vector3.back);
 		vLeft = MainCamera.transform.TransformDirection (Vector3.left);
 		vRight = MainCamera.transform.TransformDirection (Vector3.right);
 
-		if (IsGrounded () && isMoving) {
+		//Movement Code In relation to Camera Orientation
+		float moveHorizontal = Input.GetAxis ("Horizontal");
+		float moveVertical = Input.GetAxis("Vertical");
+		print(moveHorizontal + " - " + moveVertical);
+
+		if (moveHorizontal < 0) {
+			left = -1;
+			right = 0;
+		}
+		else if (moveHorizontal > 0) {
+			right = 1;
+			left = 0;
+		}
+
+
+		if (moveVertical < 0) {
+			back = -1;
+			forward = 0;
+		}
+		else if (moveVertical > 0) {
+			forward = 1;
+			back = 0;
+		}
+
+		if (isGrounded && isMoving) {
 			isRolling = false;
 			rb.velocity = SetVelocity(moveHorizontal, moveVertical);
 		}
-		else if (IsGrounded () && !isMoving) {
+		else if (isGrounded && !isMoving) {
 			if (!isRolling && onEvenSurface) {
 				rb.angularVelocity = new Vector3 (0.0f, 0.0f, 0.0f);
 				rb.velocity = new Vector3 (0.0f, 0.0f, 0.0f);
 			}
 		}
-		else if (!IsGrounded () && isMoving) {	
+		else if (!isGrounded && isMoving) {	
 			rb.velocity = SetVelocity(moveHorizontal, moveVertical);
 		}
 		
@@ -126,14 +129,9 @@ public class PlayerController : MonoBehaviour {
 	}
 	
 	void OnCollisionEnter(Collision collision) {
-		if (collision.gameObject.CompareTag ("Platform")) {
-			if (Vector3.up != collision.transform.up) {
+		onEvenSurface = true;
+		if (collision.gameObject.CompareTag ("Platform") && Vector3.up != collision.transform.up) {
 				onEvenSurface = false;
-			} else {
-				onEvenSurface = true;
-			}
-		} else {
-			onEvenSurface = true;
 		}
 	}
 	
@@ -145,7 +143,8 @@ public class PlayerController : MonoBehaviour {
 	}
 	
 	void Movement(){
-		if ((Input.GetKeyDown (KeyCode.Space) || (Input.GetAxis ("RightTrigger") > 0.0f)) && IsGrounded ()) {
+		isGrounded = IsGrounded ();
+		if ((Input.GetKeyDown (KeyCode.Space) || (Input.GetAxis ("RightTrigger") > 0.0f)) && isGrounded) {
 			Jump ();
 		}
 		
@@ -165,13 +164,18 @@ public class PlayerController : MonoBehaviour {
 	}
 	
 	void Dash(){
-		rb.freezeRotation = true;
-		Vector3 destination = new Vector3 (vForward.x * 5.0f, 0.0f, vForward.z * 5.0f);
-		rb.MovePosition (transform.position + destination * Time.deltaTime * 6.1f);
-		transform.LookAt (new Vector3(MainCamera.transform.position.x, 0.3f,MainCamera.transform.position.z));
-		dashTime = dashTime - Time.deltaTime;
+		if (isDashing) {
+			rb.freezeRotation = true;
+			Vector3 destination = new Vector3 (vForward.x * 5.0f, 0.0f, vForward.z * 5.0f);
+			rb.MovePosition (transform.position + destination * Time.deltaTime * 6.1f);
+			transform.LookAt (new Vector3 (MainCamera.transform.position.x, 0.3f, MainCamera.transform.position.z));
+			dashTime = dashTime - Time.deltaTime;
+		}
 		
-		if (dashTime <= 0) {
+		if (!isGrounded) {
+			transform.LookAt (new Vector3 (MainCamera.transform.position.x, 0.3f, MainCamera.transform.position.z));
+		}
+		if (dashTime <= 0){
 			Sparks.SetActive (false);
 			rb.freezeRotation = false;
 			isDashing = false;
@@ -193,7 +197,6 @@ public class PlayerController : MonoBehaviour {
 		// Ignore colliders in layer 8 (npc/player layer)
 		int layerMask = 1 << 8;
 		layerMask = ~layerMask;
-		
 		return Physics.Raycast(transform.position, -Vector3.up, gDistance + 0.3f, layerMask);
 	}
 	
