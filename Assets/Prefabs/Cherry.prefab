@@ -96,8 +96,9 @@ MonoBehaviour:
   countText: {fileID: 0}
   winText: {fileID: 0}
   MainCamera: {fileID: 0}
-  sparks: {fileID: 0}
-  evenSurface: 0
+  Sparks: {fileID: 0}
+  onEvenSurface: 0
+  offset: 1.4305
 --- !u!135 &13531182
 SphereCollider:
   m_ObjectHideFlags: 1

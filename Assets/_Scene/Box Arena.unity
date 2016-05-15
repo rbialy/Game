@@ -3507,6 +3507,10 @@ Prefab:
       propertyPath: Sparks
       value: 
       objectReference: {fileID: 276150938}
+    - target: {fileID: 2309390, guid: 01e4679bb0783c348abb79f818dace8f, type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 431bd1061347f9c4da49c8c43d1ec439, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 01e4679bb0783c348abb79f818dace8f, type: 2}
   m_IsPrefabParent: 0
