@@ -63,7 +63,9 @@ public class PlayerController : MonoBehaviour {
 	}
 	
 	void FixedUpdate(){
+		if(isDashing)
 		Dash ();
+		if(isJumping)
 		Jump ();
 
 		left = 0;
@@ -167,13 +169,11 @@ public class PlayerController : MonoBehaviour {
 	}
 	
 	void Dash(){
-		if (isDashing) {
-			rb.freezeRotation = true;
-			Vector3 destination = new Vector3 (vForward.x * 5.0f, 0.0f, vForward.z * 5.0f);
-			rb.MovePosition (transform.position + destination * Time.deltaTime * 6.1f);
-			transform.LookAt (new Vector3 (MainCamera.transform.position.x, 0.3f, MainCamera.transform.position.z));
-			dashTimer = dashTimer - Time.deltaTime;
-		}
+		rb.freezeRotation = true;
+		Vector3 destination = new Vector3 (vForward.x * 5.0f, 0.0f, vForward.z * 5.0f);
+		rb.MovePosition (transform.position + destination * Time.deltaTime * 6.1f);
+		transform.LookAt (new Vector3 (MainCamera.transform.position.x, 0.3f, MainCamera.transform.position.z));
+		dashTimer = dashTimer - Time.deltaTime;
 
 		if (dashTimer <= 0){
 			Sparks.SetActive (false);
@@ -183,11 +183,9 @@ public class PlayerController : MonoBehaviour {
 	}
 	
 	void Jump(){
-		if (isJumping) {
-			rb.velocity = new Vector3 (rb.velocity.x, jumpSpeed, rb.velocity.z);
-			isRolling = true;
-			isJumping = false;
-		}
+		rb.velocity = new Vector3 (rb.velocity.x, jumpSpeed, rb.velocity.z);
+		isRolling = true;
+		isJumping = false;
 	}
 	
 	Vector3 SetVelocity(float mh, float mv){
