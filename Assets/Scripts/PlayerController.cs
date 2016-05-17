@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour {
 	private Vector3 vRight;
 
 	void Start(){
+        speed = GetComponent<Player>().speed;
 		rb = GetComponent<Rigidbody> ();
 		Sparks.SetActive (false);
 		SetCountText ();
