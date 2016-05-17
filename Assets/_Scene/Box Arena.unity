@@ -171,7 +171,7 @@ MeshRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 72269203}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_Materials:
   - {fileID: 2100000, guid: 9621b0decaf8af84eaaa1f4729772829, type: 2}
@@ -3511,6 +3511,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 431bd1061347f9c4da49c8c43d1ec439, type: 2}
+    - target: {fileID: 2309390, guid: 01e4679bb0783c348abb79f818dace8f, type: 2}
+      propertyPath: m_CastShadows
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 01e4679bb0783c348abb79f818dace8f, type: 2}
   m_IsPrefabParent: 0
@@ -4102,7 +4106,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1523966054}
-  - 95: {fileID: 1523966055}
   m_Layer: 0
   m_Name: CartoonEyes
   m_TagString: Untagged
@@ -4124,24 +4127,6 @@ Transform:
   - {fileID: 1324683822}
   m_Father: {fileID: 770389314}
   m_RootOrder: 0
---- !u!95 &1523966055
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 9500000, guid: 9168b779f2645164596fcfeb13b5197b,
-    type: 3}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1523966053}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 9168b779f2645164596fcfeb13b5197b, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!4 &1530152240 stripped
 Transform:
   m_PrefabParentObject: {fileID: 490480, guid: b7bf8f700be03ae469fa524e8a9805e2, type: 2}
