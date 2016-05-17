@@ -11,4 +11,3 @@ public class Rotator : MonoBehaviour {
 		transform.Rotate (new Vector3 (xRotationSpeed, yRotationSpeed, zRotationSpeed) * Time.deltaTime);
 	}
 }
-sdfdfsgdfsdfssdfdsfdsfsdfsdfsdfasdasdasdasdasdsdfsdfsdfsdfsdfsdf
