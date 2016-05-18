@@ -141,7 +141,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3a901a257888f14d80c5b80528c5e24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DeathText: {fileID: 379411587}
 --- !u!4 &72083437 stripped
 Transform:
   m_PrefabParentObject: {fileID: 490480, guid: b7bf8f700be03ae469fa524e8a9805e2, type: 2}
@@ -2636,6 +2635,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 770389314}
+  followPlayer: 1
   turnspeed: 4
   cameraYDistance: 10
   cameraZDistance: 10
@@ -3134,6 +3134,24 @@ Transform:
 Transform:
   m_PrefabParentObject: {fileID: 451016, guid: 2de1b9207c3664648a3d725f72100785, type: 2}
   m_PrefabInternal: {fileID: 2054445411}
+--- !u!1 &1002980795 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 111276, guid: 01e4679bb0783c348abb79f818dace8f, type: 2}
+  m_PrefabInternal: {fileID: 1208210858}
+--- !u!114 &1002980801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1002980795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f88ab32f694149a4d8d7af4b522c3fc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 1
+  speed: 12
+  DeathText: {fileID: 379411587}
 --- !u!4 &1010632054 stripped
 Transform:
   m_PrefabParentObject: {fileID: 490480, guid: b7bf8f700be03ae469fa524e8a9805e2, type: 2}
