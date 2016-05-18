@@ -14,7 +14,7 @@ public class Character : MonoBehaviour {
 	
 	}
 
-    public virtual void Kill () {
-        Destroy(gameObject);
-    }
+	public virtual void Kill () {
+        	Destroy(gameObject);
+    	}
 }

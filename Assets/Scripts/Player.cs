@@ -15,8 +15,8 @@ public class Player : Character {
 	
 	}
 
-    public override void Kill () {
-        DeathText.text = "You died";
-        GameObject.Find("Main Camera").GetComponent<CameraController>().followPlayer = false;
-    }
+	public override void Kill () {
+		DeathText.text = "You died";
+		GameObject.Find("Main Camera").GetComponent<CameraController>().followPlayer = false;
+	}
 }
