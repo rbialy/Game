@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour {
 	private int count;
 	private bool isMoving;
 	private bool isRolling;
-	private bool isDashing;
+	public bool isDashing;
 	private bool isGrounded;
 	private bool isJumping;
 	private float dashTimer;
