@@ -1,7 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Enemy : Character {
+
+        public bool isPatrolling = true;
+        public int damage = 1;
 
         // variables for making enemy blink upon death
         float blinkTimer = 0;
@@ -11,10 +15,15 @@ public class Enemy : Character {
         int maxNumberOfBlinks = 3;
         Color defaultColour;
 
-        int damage = 1;
+        Rigidbody rb;
+
+        List<Transform> waypointList;
+        int currentWaypointIndex = 0;
 
         public override void Start() {
                 base.Start();
+                rb = GetComponent<Rigidbody>();
+                waypointList = GetComponent<TransformList>().transformList;
                 defaultColour = gameObject.GetComponent<Renderer>().material.color;
         }
 
@@ -24,6 +33,20 @@ public class Enemy : Character {
                 if (!IsAlive()) {
                         DeathAnimation();
                 }
+
+                if (isPatrolling) {
+                        transform.LookAt(waypointList [currentWaypointIndex]);
+                        rb.AddForce(Vector3.forward * speed);
+
+                        Debug.Log(Vector3.Distance(transform.position, waypointList[currentWaypointIndex].position));
+                        if (Vector3.Distance(transform.position, waypointList[currentWaypointIndex].position) < 0.1f) {
+                                currentWaypointIndex++;
+                                if (currentWaypointIndex >= waypointList.Count) {
+                                        currentWaypointIndex = 0;
+                                }
+                        }
+                }
+
         }
 
         public override void Kill() {
